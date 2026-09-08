@@ -8,11 +8,11 @@ const api = axios.create({
 })
 export const  getTodos=()=>api.get("/getAll");
 export const  createTodo=(payload)=>api.post("/createTarefa", payload);
-export const  createUser=(payload)=>api.post("/createUsuario", payload);
+export const  createUser=(payload)=>api.post("/register", payload);
 export const  login=(payload)=>api.post("/login", payload);
 export const  logout=()=>api.post("/logout");
-export const  reset=(payload)=>api.post("/resetPassword", payload);
-export const  forgot=(payload)=>api.post("/forgotPassword", payload);
+export const  reset=(payload)=>api.post("/reset-password", payload);
+export const  forgot=(payload)=>api.post("/forgot-password", payload);
 export const  getProfile = () => api.get("/me");
 export const  getUsers = () => api.get("/getAllUsers");
 

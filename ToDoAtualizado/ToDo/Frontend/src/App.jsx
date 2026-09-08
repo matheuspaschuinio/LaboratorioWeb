@@ -5,6 +5,9 @@ import TodoList from "./Pages/TodoList";
 import Login from "./Pages/Login";
 import TodoForm from "./Pages/TodoForm";
 import logoTodo from "./assets/logo-todo.png";
+import Register from "./Pages/UsuarioForm.jsx";
+import Forgot from "./Pages/ForgotPassword.jsx";
+import ResetPassword from "./Pages/ResetPassword.jsx";
 import { logout, getProfile } from "./api/Todo.jsx";
 
 export default function App() {
@@ -118,6 +121,31 @@ export default function App() {
                         navigate("/todos");
                       }} />
                     )
+                  }
+                />
+
+                <Route
+                  path="register"
+                  element={
+                    isAuthenticated ? (
+                      <Navigate to="/todos" replace />
+                    ) : (
+                      <Register/>
+                    )
+                  }
+                />
+
+                <Route 
+                  path="forgot-Password"
+                  element={
+                    <Forgot/>
+                  }
+                />
+
+                <Route 
+                  path="reset-Password"
+                  element={
+                    <ResetPassword/>
                   }
                 />
               </Routes>

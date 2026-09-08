@@ -109,9 +109,9 @@ export default class UsuarioController
                 resetToken: hashToken,
                 resetTokenExpiry: resetTokenExpiry
             });
-            /*sendPasswordResetEmail(usuario.email, resetToken).catch(err=>{
-                console.error("Falha no envio do e-mail");
-            });*/
+            sendPasswordResetEmail(usuario.email, resetToken).catch(err=>{
+                console.error("Falha no envio do e-mail: ", err);
+            });
             return res.status(200).json({ message: "Se o e-mail estiver cadastrado, um link será enviado1", resetToken });
         } 
         catch (error)
