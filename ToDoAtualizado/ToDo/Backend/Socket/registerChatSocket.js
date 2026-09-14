@@ -1,4 +1,4 @@
-import ChatController from "../Controllers/ChatController";
+import ChatController from "../Controllers/ChatController.js";
 export default function registerChatSocket(io, socket) {
   //entrar em uma sala específica (de uma tarefa)
   socket.on("Join_task", (tarefaId) => {
