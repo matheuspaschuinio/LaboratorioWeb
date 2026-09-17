@@ -3,7 +3,7 @@ export default class ChatController {
   static async getHistory(req, res) {
     try {
       const { tarefaId } = req.params;
-      const mensagens = await Mensagem.find({ Tarefa: tarefaId })
+      const mensagens = await Mensagem.find({ tarefa: tarefaId })
         .populate("remetente", "nome email")
         .sort({ createdAt: 1 });
       return res.status(200).json({ mensagens });
