@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getTodos, updateStatus } from "../api/Todo.jsx";
 import TodoItem from "../Components/TodoItem.jsx";
+import TodoGrafico from "../Components/TodoGrafico.jsx";
 import { Link } from "react-router-dom";
 
 export default function TodoList({ usuarioLogado }) {
@@ -55,6 +56,15 @@ export default function TodoList({ usuarioLogado }) {
           <span>+</span> Nova Tarefa
         </Link>
       </div>
+
+      {!loading && !error && (
+        <div className="flex justify-center mb-6">
+          <div className="w-full md:w-auto">
+            <TodoGrafico tarefas={todos}/>
+          </div>
+        </div>
+      )}
+
 
       {/* Status de Carregamento e Erro */}
       {loading && (
