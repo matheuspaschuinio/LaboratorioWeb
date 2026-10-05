@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TodoChatModal from "./TodoChatModal.jsx";
 
-export default function TodoItem({ todo, usuarioLogado }) {
+export default function TodoItem({ todo, usuarioLogado, onAlterarStatus }) {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Extrai as iniciais do nome (ex: "Carlos Silva" -> "CS")
@@ -22,6 +22,9 @@ export default function TodoItem({ todo, usuarioLogado }) {
 
   // Lista com todos os nomes para tooltip
   const todosNomesParticipantes = participantes.map((p) => p.nome).join(", ");
+
+  const todoId = todo._id || todo.id;
+  const situacaoAtual = todo.situacao || "PENDENTE";
 
   return (
     <>
@@ -44,7 +47,7 @@ export default function TodoItem({ todo, usuarioLogado }) {
                 : "bg-gray-100 text-gray-700"
             }`}
           >
-            {todo.situacao}
+            {todo.situacao || "PENDENTE"}
           </span>
         </div>
 
@@ -104,6 +107,38 @@ export default function TodoItem({ todo, usuarioLogado }) {
               </div>
             )}
 
+            <div className="flex items-center gap-2 border-l border-gray-200 pl-3">
+              {situacaoAtual === "PENDENTE" && (
+                <>
+                  <button onClick={() => onAlterarStatus(todoId, "EM_ANDAMENTO")} className="px-3 py-1.5 text-xs font-semibold text-yellow-700 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-lg transition-colors cursor-pointer">
+                    Iniciar
+                  </button>
+                  <button onClick={() => onAlterarStatus(todoId, "CONCLUIDA")} className="px-3 py-1.5 text-xs font-semibold text-green-700 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-lg transition-colors cursor-pointer">
+                    Finalizar
+                  </button>
+                </>
+              )}
+
+              {situacaoAtual === "EM_ANDAMENTO" && (
+                <>
+                  <button onClick={() => onAlterarStatus(todoId, "PENDENTE")} className="px-3 py-1.5 text-xs font-semibold text-gray-700 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-lg transition-colors cursor-pointer">
+                    Pausar
+                  </button>
+                  <button onClick={() => onAlterarStatus(todoId, "CONCLUIDA")} className="px-3 py-1.5 text-xs font-semibold text-green-700 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-lg transition-colors cursor-pointer">
+                    Finalizar
+                  </button>
+                </>
+              )}
+
+              {situacaoAtual === "CONCLUIDA" && (
+                <>
+                  <button onClick={() => onAlterarStatus(todoId, "PENDENTE")} className="px-3 py-1.5 text-xs font-semibold text-gray-700 bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-lg transition-colors cursor-pointer">
+                    Refazer
+                  </button>
+                </>
+              )}
+  
+
             {/*Botão para abrir o modal de Chat */}
             <button
               onClick={() => setIsChatOpen(true)}
@@ -113,6 +148,8 @@ export default function TodoItem({ todo, usuarioLogado }) {
               <span>💬</span>
               <span>Chat</span>
             </button>
+
+            </div>
           </div>
         </div>
       </div>

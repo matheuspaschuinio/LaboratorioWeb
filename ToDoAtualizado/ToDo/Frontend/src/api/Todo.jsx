@@ -8,6 +8,7 @@ const api = axios.create({
 })
 export const  getTodos=()=>api.get("/getAll");
 export const  createTodo=(payload)=>api.post("/createTarefa", payload);
+export const  updateStatus=(tarefaId, novaSituacao)=>api.patch(`/atualizarStatus/${tarefaId}`, { situacao: novaSituacao });
 export const  createUser=(payload)=>api.post("/register", payload);
 export const  login=(payload)=>api.post("/login", payload);
 export const  logout=()=>api.post("/logout");

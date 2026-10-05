@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getTodos } from "../api/Todo.jsx";
+import { getTodos, updateStatus } from "../api/Todo.jsx";
 import TodoItem from "../Components/TodoItem.jsx";
 import { Link } from "react-router-dom";
 
@@ -24,6 +24,21 @@ export default function TodoList({ usuarioLogado }) {
   useEffect(() => {
     fetchTodos();
   }, []);
+
+  const alterarStatusTarefa = async (id, novaSituacao) => {
+    try {
+      //chama a função da api
+      await updateStatus(id, novaSituacao);
+      setTodos((todosAtuais) =>
+        todosAtuais.map((todo) =>
+        (todo._id || todo.id) === id ? { ...todo, situacao: novaSituacao } : todo
+        )
+      );
+    } catch (error) {
+      const msg = error.response?.data?.message || error.message || "Erro ao atualizar status da tarefa";
+      setError(msg);
+    }
+  }
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8">
@@ -67,6 +82,7 @@ export default function TodoList({ usuarioLogado }) {
                key={todo._id || todo.id}
                todo={todo} 
                usuarioLogado={usuarioLogado}
+               onAlterarStatus={alterarStatusTarefa}
                /> 
             ))
           )}

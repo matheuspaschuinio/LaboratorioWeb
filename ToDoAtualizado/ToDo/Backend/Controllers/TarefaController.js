@@ -47,4 +47,26 @@ export default class TarefaController{
         }
 
     }//fim getAll
+    static async UpdateStatus(req, res){
+        try {
+            const { id } = req.params;
+            const { situacao } = req.body;
+
+            //atualiza a tarefa no banco
+            const tarefaAtualizada = await Tarefa.findByIdAndUpdate(
+                id,
+                { situacao: situacao },
+                { new: true } //retorna o documento atualizado
+            );
+
+            if(!tarefaAtualizada){
+                return res.status(404).json({message: "Tarefa não encontrada"});
+            }
+
+            return res.status(200).json({message:"Atualizar situação com sucesso", tarefaAtualizada});
+        }
+        catch (error) {
+            return res.status(500).json({message:"Erro ao atualizar status da tarefa", error});
+        }
+    }
 }
