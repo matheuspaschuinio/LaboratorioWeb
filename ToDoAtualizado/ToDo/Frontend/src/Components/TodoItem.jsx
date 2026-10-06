@@ -47,7 +47,11 @@ export default function TodoItem({ todo, usuarioLogado, onAlterarStatus }) {
                 : "bg-gray-100 text-gray-700"
             }`}
           >
-            {todo.situacao || "PENDENTE"}
+            {todo.situacao === "CONCLUIDA"
+              ? "Concluída"
+              : todo.situacao === "EM_ANDAMENTO"
+              ? "Em andamento"
+              : "Pendente"}
           </span>
         </div>
 
